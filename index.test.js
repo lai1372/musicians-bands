@@ -47,7 +47,15 @@ describe("Band, Musician, and Song Models", () => {
 
   test("can update a Musician", async () => {
     // TODO - test updating a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const testMusician = await Musician.create({
+        name: "Shabaka Hutchings",
+        instrument: "Saxaphone",
+      });
+    const updatedMusician = testMusician.update({
+        instrument: "Sax"
+    })
+
+    expect(testMusician.instrument).toBe("Sax");
   });
 
   test("can delete a Band", async () => {
