@@ -7,9 +7,16 @@ Song.init({
   title: DataTypes.STRING,
   year: DataTypes.INTEGER,
   length: DataTypes.INTEGER,
+}, {
+    sequelize: sequelize,
+    modelName: "song"
 });
 
-let Song;
+// let Song = await Song.create({
+//     title: "505",
+//     year: 2007,
+//     length: 3.33
+// })
 
 module.exports = {
   Song,

@@ -6,9 +6,11 @@ class Musician extends Model{}
 Musician.init({
     name: DataTypes.STRING,
     instrument: DataTypes.STRING
+},{
+    sequelize: sequelize,
+    modelName: "musician"
 })
 
-let Musician;
 
 
 module.exports = {
