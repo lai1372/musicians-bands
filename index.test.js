@@ -7,9 +7,6 @@ describe("Band, Musician, and Song Models", () => {
    * Runs the code prior to all tests
    */
   beforeAll(async () => {
-    // the 'sync' method will create tables based on the model class
-    // by setting 'force:true' the tables are recreated each time the
-    // test suite is run
     await sequelize.sync({ force: true });
   });
 
@@ -97,5 +94,27 @@ describe("Band, Musician, and Song Models", () => {
     expect(
       await Musician.findOne({ where: { name: "Shabaka Hutchings" } })
     ).not.toBe(null);
+  });
+
+  test("band and musician be correctly associated", async () => {
+    const testBand = await Band.create({
+      name: "Arctic Monkeys",
+      genre: "Indie Rock",
+    });
+    const testMusician = await Musician.create({
+      name: "Shabaka Hutchings",
+      instrument: "Saxaphone",
+    });
+    const testMusician2 = await Musician.create({
+      name: "Dave Grohl",
+      instrument: "Drums",
+    });
+
+    await testBand.addMusicians([testMusician, testMusician2])
+
+    const bandsWithMusicians = await testBand.getMusicians()
+    expect(bandsWithMusicians.length).toBe(2);
+    expect(bandsWithMusicians[0].name).toBe("Shabaka Hutchings");
+    expect(bandsWithMusicians[1].name).toBe("Dave Grohl");
   });
 });
